@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Generator</title>
+    <!-- Google Fonts: Lato, Roboto, Rubik Mono One, Rubik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Mono+One&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS compiled stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+    <!-- FontAwesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Custom scrollbar and ambient layout styles */
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 4px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: hsl(var(--border));
+        border-radius: 2px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: hsl(var(--primary));
+      }
+    </style>
+  </head>
+  <body
+    class="bg-black text-foreground min-h-screen font-rounded antialiased flex flex-col items-center justify-center p-4 selection:bg-primary selection:text-white"
+  >
+    <!-- Main Container -->
+    <main
+      class="w-full max-w-2xl border-border rounded-xl p-6 md:p-8 flex flex-col gap-6"
+    >
+      <!-- Title / Brand -->
+      <div class="text-center">
+        <h1
+          class="font-display font-bold text-2xl tracking-wider bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent uppercase"
+        >
+          Image Generator
+        </h1>
+        <p class="text-xs text-neutral-500 font-mono tracking-widest mt-1">
+          LOCAL UTILITY TOOL
+        </p>
+      </div>
+
+      <!-- Input Area -->
+      <div class="flex flex-col gap-2">
+        <label
+          for="prompt-input"
+          class="text-xs font-mono text-neutral-400 uppercase tracking-wider"
+          >Prompt</label
+        >
+        <textarea
+          id="prompt-input"
+          rows="3"
+          class="w-full bg-secondary/80 border border-border rounded-lg p-3.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 scrollbar-thin resize-none placeholder:text-neutral-600"
+          placeholder="Type prompt here (e.g. 'cyberpunk street', 'misty mountains', 'astronaut throne', 'cozy cabin snow')..."
+        ></textarea>
+      </div>
+
+      <!-- Presets / Inspiration Grid -->
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <label
+            class="text-xs font-mono text-neutral-400 uppercase tracking-wider"
+            >Presets / Inspiration</label
+          >
+          <span class="text-[10px] text-neutral-500 font-mono"
+            >Select to populate prompt</span
+          >
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <!-- Preset 1: Cyberpunk -->
+          <button
+            type="button"
+            class="preset-card group relative h-20 rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 focus:outline-none"
+            data-prompt="Cyberpunk street, neon city lights, rainy night with puddles, futuristic cyberpunk alleyway"
+          >
+            <img
+              src="/presets/cyberpunk_street.png"
+              alt="Cyberpunk"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-90"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end p-2"
+            >
+              <span
+                class="text-[10px] font-bold font-display tracking-wider text-white uppercase group-hover:text-primary transition-colors duration-300"
+                >Cyberpunk</span
+              >
+            </div>
+          </button>
+          <!-- Preset 2: Misty Mountains -->
+          <button
+            type="button"
+            class="preset-card group relative h-20 rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 focus:outline-none"
+            data-prompt="Misty mountains, fantasy floating island, sacred shrine ruins, water falls, valley landscape"
+          >
+            <img
+              src="/presets/misty_mountains.png"
+              alt="Misty Mountains"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-90"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end p-2"
+            >
+              <span
+                class="text-[10px] font-bold font-display tracking-wider text-white uppercase group-hover:text-primary transition-colors duration-300"
+                >Misty Peaks</span
+              >
+            </div>
+          </button>
+          <!-- Preset 3: Astronaut -->
+          <button
+            type="button"
+            class="preset-card group relative h-20 rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 focus:outline-none"
+            data-prompt="Futuristic astronaut sitting on a mossy stone throne, alien planet sunset, sci-fi landscape"
+          >
+            <img
+              src="/presets/futuristic_astronaut.png"
+              alt="Astronaut"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-90"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end p-2"
+            >
+              <span
+                class="text-[10px] font-bold font-display tracking-wider text-white uppercase group-hover:text-primary transition-colors duration-300"
+                >Astronaut</span
+              >
+            </div>
+          </button>
+          <!-- Preset 4: Cozy Cabin -->
+          <button
+            type="button"
+            class="preset-card group relative h-20 rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 focus:outline-none"
+            data-prompt="Cozy cabin in a snowy forest under aurora borealis, warm window lights, pine trees, winter night"
+          >
+            <img
+              src="/presets/cozy_cabin.png"
+              alt="Cozy Cabin"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-90"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-end p-2"
+            >
+              <span
+                class="text-[10px] font-bold font-display tracking-wider text-white uppercase group-hover:text-primary transition-colors duration-300"
+                >Cozy Cabin</span
+              >
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Aspect Ratio Selector (Before Generation) -->
+      <div
+        id="size-selector-container"
+        class="flex flex-col gap-2 p-3.5 border border-border/40 rounded-xl bg-black/20 transition-all duration-300"
+      >
+        <span
+          class="text-xs font-mono text-neutral-400 uppercase tracking-wider flex items-center justify-between"
+        >
+          <span>Size Selector <span class="text-primary">*</span></span>
+          <span class="text-[9px] text-neutral-500 normal-case font-mono"
+            >Required</span
+          >
+        </span>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            id="btn-portrait"
+            type="button"
+            class="size-btn px-3 py-2.5 rounded-lg border border-border bg-secondary/40 text-neutral-400 hover:text-white hover:border-primary/50 text-xs font-mono text-center transition-all flex flex-col items-center justify-center gap-1.5"
+            data-ratio="portrait"
+          >
+            <span class="h-4 w-2.5 border-2 border-current rounded-sm"></span>
+            Portrait
+          </button>
+          <button
+            id="btn-inbetween"
+            type="button"
+            class="size-btn px-3 py-2.5 rounded-lg border border-border bg-secondary/40 text-neutral-400 hover:text-white hover:border-primary/50 text-xs font-mono text-center transition-all flex flex-col items-center justify-center gap-1.5"
+            data-ratio="inbetween"
+          >
+            <span class="h-3.5 w-3.5 border-2 border-current rounded-sm"></span>
+            Almost Square
+          </button>
+          <button
+            id="btn-landscape"
+            type="button"
+            class="size-btn px-3 py-2.5 rounded-lg border border-border bg-secondary/40 text-neutral-400 hover:text-white hover:border-primary/50 text-xs font-mono text-center transition-all flex flex-col items-center justify-center gap-1.5"
+            data-ratio="landscape"
+          >
+            <span class="h-2.5 w-4 border-2 border-current rounded-sm"></span>
+            Landscape
+          </button>
+        </div>
+      </div>
+
+      <!-- Generate Action -->
+      <button
+        id="generate-btn"
+        disabled
+        class="w-full bg-primary hover:brightness-110 active:brightness-95 text-white font-display font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all relative overflow-hidden group shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100"
+      >
+        <i id="generate-btn-icon" class="fa-solid fa-download"></i>
+        <span id="generate-btn-text">Awaiting Model...</span>
+      </button>
+
+      <!-- Model Download Progress (Socket Placeholder) -->
+      <div id="model-download-container" class="flex flex-col gap-2 p-3.5 border border-border/40 rounded-xl bg-black/20 transition-all duration-300">
+        <div class="flex items-center justify-between text-xs font-mono text-neutral-400">
+          <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-download text-primary animate-pulse"></i>
+            <span>Local Model Cache Status <span id="model-size-label" class="text-neutral-500 font-normal text-[10px]"></span></span>
+          </span>
+          <span id="model-download-percent" class="font-bold text-primary">0%</span>
+        </div>
+        <!-- Progress Bar Track -->
+        <div class="w-full h-1.5 bg-secondary rounded-full overflow-hidden border border-border/60">
+          <div id="model-download-bar" class="h-full bg-gradient-to-r from-primary/80 to-primary transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <span id="model-download-status" class="text-[10px] text-neutral-500 font-mono">Checking local cache...</span>
+      </div>
+
+      <!-- Download Bar (Hidden initially, shown when image loaded) -->
+      <div
+        id="controls-bar"
+        class="hidden flex flex-col sm:flex-row items-center justify-end border-t border-border/60 pt-5"
+      >
+        <!-- Download Action -->
+        <a
+          id="download-btn"
+          href=""
+          download="generated-image.png"
+          class="w-full sm:w-auto px-5 py-2.5 rounded bg-primary hover:brightness-110 text-xs text-white font-semibold flex items-center justify-center gap-1.5 transition-all shadow-md"
+        >
+          <i class="fa-solid fa-download"></i>
+          <span>Download Image</span>
+        </a>
+      </div>
+
+      <!-- Display Canvas Area -->
+      <div
+        class="flex items-center justify-center p-2 relative overflow-hidden min-h-[320px]"
+      >
+        <!-- Image Canvas Wrapper (Resizes dynamically before/after generation) -->
+        <div
+          id="canvas-wrapper"
+          class="transition-all duration-300 flex items-center justify-center border border-border rounded-xl bg-black/40 shadow-inner"
+          style="width: 400px; height: 400px"
+        >
+          <!-- Empty Placeholder -->
+          <div id="canvas-placeholder" class="text-center py-6 px-4">
+            <i
+              class="fa-regular fa-image text-3xl text-neutral-600 mb-2 block"
+            ></i>
+            <span class="text-xs text-neutral-500 block"
+              >Awaiting Generation</span
+            >
+            <span
+              id="canvas-aspect-hint"
+              class="text-[9px] font-mono text-neutral-600 uppercase mt-0.5 block"
+              >Select a size above...</span
+            >
+          </div>
+
+          <!-- Loading Spinner with real-time WebSocket progress details -->
+          <div
+            id="canvas-loader"
+            class="hidden text-center py-4 px-4 flex flex-col items-center justify-center gap-2"
+          >
+            <i
+              class="fa-solid fa-circle-notch animate-spin text-2xl text-primary mb-1 block"
+            ></i>
+            <span
+              id="loader-percent"
+              class="text-sm font-mono font-bold text-white block"
+              >0%</span
+            >
+            <span
+              id="loader-status"
+              class="text-xs text-neutral-400 block font-display"
+              >Connecting...</span
+            >
+            <span
+              id="loader-sub"
+              class="text-[9px] text-neutral-500 font-mono tracking-widest uppercase block"
+              >INITIALIZING</span
+            >
+          </div>
+
+          <!-- Output image wrapper -->
+          <img
+            id="output-image"
+            src=""
+            alt="Generated artwork"
+            class="hidden w-full h-full object-cover rounded opacity-0 transition-opacity duration-500"
+          />
+        </div>
+      </div>
+    </main>
+
+    <!-- Socket.io connection -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/script.js"></script>
+  </body>
+</html>

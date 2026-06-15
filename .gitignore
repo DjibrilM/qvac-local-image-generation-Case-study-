@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+.device-preference.json
+# Compiled CSS can be ignored if built dynamically
+# public/style.css
